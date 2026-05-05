@@ -45,21 +45,173 @@ def fetch_section(feed_list):
 
 CSS = """
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #f4f1ea; color: #1a1a1a; font-family: 'Noto Serif TC', Georgia, serif; line-height: 1.7; padding: 2rem 1rem; }
-.container { max-width: 880px; margin: 0 auto; }
-header { border-bottom: 4px double #1a1a1a; padding-bottom: 1.2rem; margin-bottom: 2.5rem; }
-.meta { display: flex; justify-content: space-between; font-family: 'Noto Sans TC', sans-serif; font-size: 0.75rem; color: #5a5040; letter-spacing: 0.2em; margin-bottom: 1rem; }
-h1 { font-family: 'Noto Serif TC', serif; font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; line-height: 1.1; letter-spacing: 0.05em; }
-h1 em { font-style: normal; color: #8b2635; }
-.tagline { font-size: 0.95rem; color: #5a5040; margin-top: 0.75rem; letter-spacing: 0.1em; }
-.section { margin-bottom: 2.8rem; }
-.section h2 { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid #c4b8a0; letter-spacing: 0.08em; }
-.news-item { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: 0.95rem 0; border-bottom: 1px solid #d4cab3; }
-.num { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; font-weight: 900; color: #c4b8a0; }
-.news-body a { display: block; color: #1a1a1a; text-decoration: none; font-weight: 600; font-size: 1.05rem; line-height: 1.5; }
-.news-body a:hover { color: #8b2635; }
-.source { font-family: 'Noto Sans TC', sans-serif; font-size: 0.75rem; color: #5a5040; letter-spacing: 0.1em; margin-top: 0.4rem; display: inline-block; }
-footer { margin-top: 3rem; padding-top: 1rem; border-top: 2px solid #1a1a1a; font-family: 'Noto Sans TC', sans-serif; font-size: 0.75rem; color: #5a5040; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+html, body { background: #0a0a0a; }
+body {
+  color: #e8e8e8;
+  font-family: 'Noto Sans TC', -apple-system, sans-serif;
+  line-height: 1.7;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(0, 255, 170, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 170, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.container { max-width: 880px; margin: 0 auto; position: relative; }
+.container::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: -10px;
+  width: 40px; height: 40px;
+  border-top: 2px solid #00ffaa;
+  border-left: 2px solid #00ffaa;
+}
+.container::after {
+  content: '';
+  position: absolute;
+  bottom: -10px; right: -10px;
+  width: 40px; height: 40px;
+  border-bottom: 2px solid #00ffaa;
+  border-right: 2px solid #00ffaa;
+}
+header {
+  border-bottom: 1px solid #222;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 80px; height: 1px;
+  background: #00ffaa;
+  box-shadow: 0 0 8px #00ffaa;
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: #00ffaa;
+  letter-spacing: 0.3em;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+}
+.meta .blink { animation: blink 1.5s infinite; }
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.2; } }
+h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(0, 255, 170, 0.15);
+}
+h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, #00ffaa 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 1rem;
+  letter-spacing: 0.1em;
+}
+.tagline::before { content: '> '; color: #00ffaa; }
+.section { margin-bottom: 3rem; }
+.section h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 1.2rem;
+  padding: 0.6rem 1rem;
+  letter-spacing: 0.1em;
+  color: #00ffaa;
+  background: linear-gradient(90deg, rgba(0, 255, 170, 0.08) 0%, transparent 100%);
+  border-left: 3px solid #00ffaa;
+  position: relative;
+}
+.section h2::before {
+  content: '[ ';
+  font-family: 'JetBrains Mono', monospace;
+  color: #00ffaa;
+  opacity: 0.5;
+}
+.section h2::after {
+  content: ' ]';
+  font-family: 'JetBrains Mono', monospace;
+  color: #00ffaa;
+  opacity: 0.5;
+}
+.news-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.2rem;
+  padding: 1rem 0.8rem;
+  border-bottom: 1px solid #1a1a1a;
+  transition: all 0.2s ease;
+}
+.news-item:hover {
+  background: rgba(0, 255, 170, 0.04);
+  border-bottom-color: #00ffaa;
+}
+.num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #00ffaa;
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+}
+.news-body a {
+  display: block;
+  color: #e8e8e8;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.55;
+  transition: color 0.2s;
+}
+.news-body a:hover { color: #00ffaa; }
+.source {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #555;
+  letter-spacing: 0.15em;
+  margin-top: 0.5rem;
+  display: inline-block;
+  text-transform: uppercase;
+}
+footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #222;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  letter-spacing: 0.1em;
+}
+footer .status {
+  color: #00ffaa;
+}
+footer .status::before {
+  content: '● ';
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 """
 
 
@@ -78,13 +230,13 @@ def build_html(sections, now_str):
         '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
         '<title>晨間市場摘要</title>'
-        '<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">'
+        '<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">'
         '<style>' + CSS + '</style></head><body><div class="container">'
-        '<header><div class="meta"><span>市場日報</span><span>' + now_str + '</span></div>'
+        '<header><div class="meta"><span class="blink">● MARKET BRIEF</span><span>' + now_str + '</span></div>'
         '<h1>晨間 <em>市場</em> 摘要</h1>'
         '<p class="tagline">昨夜美股 · 今晨台灣要聞 · 每日自動更新</p></header>'
         + body +
-        '<footer><span>每日自動彙整 · 資料僅供參考</span><span>更新時間 ' + now_str + '</span></footer>'
+        '<footer><span class="status">SYSTEM ONLINE</span><span>LAST UPDATE ' + now_str + '</span></footer>'
         '</div></body></html>'
     )
     return html
